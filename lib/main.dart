@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'QuizBrain.dart';
+
+QuizBrain quizBrain = QuizBrain();
 
 void main() {
   runApp(const Quizzler());
@@ -30,13 +33,12 @@ class Quizz extends StatefulWidget {
 
 class _QuizzState extends State<Quizz> {
   List<Icon> scoreKeeper = [];
-  List<String> questions = [
-    'Siyaad Bare wuxuu dhintay 1991',
-    'Xasan sheikh waa madaxweynaha kaliya ee 2 mar xilka qabtay',
-    'Aadan cade waa madaxweynihii ugu horeyay ee Soomaaliya'
-  ];
-  List<bool> answers = [false, true, true];
-  int questionno = 0;
+  // List<String> questions = [
+  //   'Siyaad Bare wuxuu dhintay 1991',
+  //   'Xasan sheikh waa madaxweynaha kaliya ee 2 mar xilka qabtay',
+  //   'Aadan cade waa madaxweynihii ugu horeyay ee Soomaaliya'
+  // ];
+  // List<bool> answers = [false, true, true];
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +52,7 @@ class _QuizzState extends State<Quizz> {
               padding: const EdgeInsets.all(10.0),
               child: Center(
                 child: Text(
-                  questions[questionno],
+                  quizBrain.getQuestionText(),
                   textAlign: TextAlign.center,
                   style: const TextStyle(color: Colors.white, fontSize: 25.0),
                 ),
@@ -62,15 +64,23 @@ class _QuizzState extends State<Quizz> {
               padding: const EdgeInsets.all(15),
               child: TextButton(
                 onPressed: () {
-                  bool correctAns = answers[questionno];
-                  if (correctAns == false) {
+                  bool correctAns = quizBrain.getQuestionAnswer();
+                  if (correctAns == true) {
+                    const Icon(
+                      Icons.check,
+                      color: Colors.green,
+                    );
                     print('got the right answer');
                   } else {
+                    const Icon(
+                      Icons.close,
+                      color: Colors.red,
+                    );
                     print('got the wrong answer');
                   }
                   setState(
                     () {
-                      questionno++;
+                      quizBrain.nextQuestion();
                     },
                   );
                 },
@@ -93,15 +103,23 @@ class _QuizzState extends State<Quizz> {
               padding: const EdgeInsets.all(15.0),
               child: TextButton(
                 onPressed: () {
-                  bool correctAns = answers[questionno];
-                  if (correctAns == true) {
+                  bool correctAns = quizBrain.getQuestionAnswer();
+                  if (correctAns == false) {
+                    const Icon(
+                      Icons.check,
+                      color: Colors.green,
+                    );
                     print('got the right answer');
                   } else {
+                    const Icon(
+                      Icons.close,
+                      color: Colors.red,
+                    );
                     print('got the wrong answer');
                   }
                   setState(
                     () {
-                      questionno++;
+                      quizBrain.nextQuestion();
                     },
                   );
                 },
